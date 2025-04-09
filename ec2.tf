@@ -1,7 +1,7 @@
 
 resource "aws_launch_template" "LT" {
   name_prefix   = "web_template"
-  image_id      = "ami-4513564654g46"
+  image_id      = "ami-084568db4383264d4"
   instance_type = "t2.micro"
   key_name      = "Devopskey"
 
@@ -13,14 +13,15 @@ resource "aws_launch_template" "LT" {
   }
 
 resource "aws_autoscaling_group" "ASG" {
-    desired_capacity = 2
-    max_size = 3
-    min_size = 1
-    vpc_zone_identifier = [aws_subnet.publicsubnet1]
-    launch_template {
-    id = aws_launch_template.LT.id
-    version = "$Latest"    
-    }
+  desired_capacity     = 2
+  max_size             = 3
+  min_size             = 1
+  vpc_zone_identifier  = [aws_subnet.publicsubnet1.id]  # Make sure `.id` is used
+
+  launch_template {
+    id      = aws_launch_template.LT.id
+    version = "$Latest"
+  }
 
   
 }
