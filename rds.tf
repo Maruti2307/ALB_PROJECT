@@ -9,3 +9,12 @@ resource "aws_db_instance" "rds" {
   parameter_group_name = "default.mysql8.0"
   skip_final_snapshot  = true
 }
+resource "aws_db_subnet_group" "default" {
+  name = "main"
+  subnet_ids = [aws_subnet.privatesubnet1.id, aws_subnet.privatesubnet2.id]
+
+  tags ={
+    Name = "My DB subnet Group"
+  }
+  
+}
